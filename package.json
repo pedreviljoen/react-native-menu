@@ -1,0 +1,25 @@
+{
+  "name": "react-native-menu",
+  "version": "1.0.0",
+  "description": "Simple & lightweight side menu drawer",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo 'no tests'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pedreviljoen/react-native-menu.git"
+  },
+  "keywords": [
+    "react",
+    "native",
+    "menu",
+    "drawer"
+  ],
+  "author": "Pedre Viljoen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pedreviljoen/react-native-menu/issues"
+  },
+  "homepage": "https://github.com/pedreviljoen/react-native-menu#readme"
+}
