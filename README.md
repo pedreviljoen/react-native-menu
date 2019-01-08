@@ -1,19 +1,18 @@
 <div align="center">
-	<img src="assets/item.gif" alt="Item" height="450px">
+	<img src="assets/menu.gif" alt="Item" height="450px">
 </div>
 
-# react-native-menu
+# react-native-side-drawer
 
-[![Package version](https://img.shields.io/npm/v/react-native-menu.svg?style=flat-square)](https://npmjs.org/package/react-native-menu)
+[![Package version](https://img.shields.io/npm/v/react-native-side-drawer.svg?style=flat-square)](https://npmjs.org/package/react-native-side-drawer)
 [![Make a pull request](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
-[![License](https://img.shields.io/npm/l/react-native-menu.svg?style=flat-square)](https://github.com/react-native-menu/blob/master/LICENSE)
-[![npm downloads](https://img.shields.io/npm/dm/react-native-menu.svg?style=flat-square)](https://npmjs.org/package/react-native-menu)
+[![License](https://img.shields.io/npm/l/react-native-side-drawer.svg?style=flat-square)](https://github.com/react-native-menu/blob/master/LICENSE)
+[![npm downloads](https://img.shields.io/npm/dm/react-native-side-drawer.svg?style=flat-square)](https://npmjs.org/package/react-native-side-drawer)
 
 > Simple & lightweight side menu drawer
 
 ## Contents
 
-- [react-native-menu](#react-native-menu)
   - [Contents](#contents)
   - [Install](#install)
   - [Usage](#usage)
@@ -24,18 +23,65 @@
 ## Install
 
 ```sh
-yarn install react-native-menu
+yarn install react-native-side-drawer
 ```
 
 OR
 
 ```sh
-npm install react-native-menu
+npm install react-native-side-drawer
 ```
 
 ## Usage
 
+```javascript
+import React from 'react'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import MenuDrawer from 'react-native-side-drawer'
+
+class Example extends React.Component {
+
+    render() {
+        return(
+            <View style={styles.container}>
+                <MenuDrawer open={this.state.open}>
+                    <TouchableOpacity onPress={this.toggleOpen}>
+                        <Text>
+                            Close
+                        </Text>
+                    </TouchableOpacity>
+                </MenuDrawer>
+                <TouchableOpacity onPress={this.toggleOpen}>
+                    <Text>
+                        Open
+                    </Text>
+                </TouchableOpacity>
+            </View>
+        )
+    }
+}
+
+const styles = StyleSheet.create({
+    containerStyle: {
+        // some custom styling
+    },
+})
+```
+
 ## Props
+
+<table width="80%">
+    <tr>
+        <th>Property</th>
+        <th>Description</th> 
+        <th>Default Value</th>
+    </tr>
+    <tr>
+        <td><code>containerStyle</code></td>
+        <td>Styles of item container</td> 
+        <td><code>{}</code></td>
+    </tr>
+</table>
 
 ## Contribute
 
@@ -48,6 +94,12 @@ Contributions are welcome!
 5. Submit a pull request :D
 
 Or open up [a issue](https://github.com/pedreviljoen/react-native-menu/issues).
+
+## Coming soon
+
+- [x] iOS SafeArea support
+- [ ] Custom width of drawer
+- [ ] Opacity fade of background screen
 
 ## License
 

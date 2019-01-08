@@ -40,7 +40,7 @@ class MenuDrawer extends React.Component{
     }
 
     render() {
-        const { children } = this.props
+        const { children, containerStyle } = this.props
         const animated = { transform: [{ translateX: this.leftOffset }] }
 
         if (isIOS && VERSION >= 11){
@@ -57,7 +57,7 @@ class MenuDrawer extends React.Component{
 
         return (
             <Animated.View style={[animated, styles.main]}>
-                <View style={styles.container}>
+                <View style={[styles.container, containerStyle]}>
                     {children}
                 </View>
             </Animated.View>
@@ -65,17 +65,26 @@ class MenuDrawer extends React.Component{
     }
 }
 
+MenuDrawer.defaultProps = {
+    containerStyle: {}
+}
+
+MenuDrawer.propTypes = {
+    containerStyle: PropTypes.object
+}
+
 const styles = StyleSheet.create({
     main: {
         position: 'absolute',
         height: SCREEN_HEIGHT,
-        left: -SCREEN_WIDTH
+        left: -SCREEN_WIDTH,
+        zIndex: 1
     },
     container: {
         flex: 1,
         width: SCREEN_WIDTH,
         position: 'absolute',
-        backgroundColor: '#0f0f',
+        backgroundColor: '#F3F7F9',
         marginTop: 20,
         padding: 10,
         height: SCREEN_HEIGHT,

@@ -1,6 +1,6 @@
 {
-  "name": "react-native-menu",
-  "version": "1.0.0",
+  "name": "react-native-side-drawer",
+  "version": "1.0.1",
   "description": "Simple & lightweight side menu drawer",
   "main": "index.js",
   "scripts": {
@@ -21,5 +21,18 @@
   "bugs": {
     "url": "https://github.com/pedreviljoen/react-native-menu/issues"
   },
-  "homepage": "https://github.com/pedreviljoen/react-native-menu#readme"
+  "homepage": "https://github.com/pedreviljoen/react-native-menu#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "devDependencies": {
+    "prettier-standard": "^8.0.1"
+  },
+  "dependencies": {
+    "prop-types": "^15.6.2"
+  }
 }
