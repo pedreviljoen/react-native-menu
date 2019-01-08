@@ -44,7 +44,10 @@ class Example extends React.Component {
     render() {
         return(
             <View style={styles.container}>
-                <MenuDrawer open={this.state.open}>
+                <MenuDrawer 
+                    open={this.state.open}
+                    containerStyle={styles.containerStyle}
+                >
                     <TouchableOpacity onPress={this.toggleOpen}>
                         <Text>
                             Close
@@ -80,6 +83,11 @@ const styles = StyleSheet.create({
         <td><code>containerStyle</code></td>
         <td>Styles of item container</td> 
         <td><code>{}</code></td>
+    </tr>
+    <tr>
+        <td><code>open</code></td>
+        <td>Boolean value toggling open and close of drawer</td> 
+        <td><code>false (closed)</code></td>
     </tr>
 </table>
 

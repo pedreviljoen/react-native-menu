@@ -66,11 +66,13 @@ class MenuDrawer extends React.Component{
 }
 
 MenuDrawer.defaultProps = {
-    containerStyle: {}
+    containerStyle: {},
+    open: false
 }
 
 MenuDrawer.propTypes = {
-    containerStyle: PropTypes.object
+    containerStyle: PropTypes.object,
+    open: PropTypes.bool
 }
 
 const styles = StyleSheet.create({
