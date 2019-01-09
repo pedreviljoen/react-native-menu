@@ -62,7 +62,12 @@ class Example extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <MenuDrawer open={this.state.open} drawerContent={this.drawerContent()}>
+        <MenuDrawer 
+          open={this.state.open} 
+          drawerContent={this.drawerContent()}
+          drawerPercentage={45}
+          animationTime={250}
+        >
           <TouchableOpacity onPress={this.toggleOpen} style={styles.body}>
             <Text>Open</Text>
           </TouchableOpacity>
@@ -112,6 +117,16 @@ const styles = StyleSheet.create({
         <td>Boolean value toggling open and close of drawer</td> 
         <td><code>false (closed)</code></td>
     </tr>
+    <tr>
+        <td><code>drawerPercentage</code></td>
+        <td>Integer value between 0 - 100, depicting the percentage of the screen the drawer will open</td> 
+        <td><code>45</code></td>
+    </tr>
+    <tr>
+        <td><code>animationTime</code></td>
+        <td>Integer value, depicting the time (in ms) the menu will slide open & close</td> 
+        <td><code>200</code></td>
+    </tr>
 </table>
 
 ## Contribute
@@ -129,7 +144,7 @@ Or open up [a issue](https://github.com/pedreviljoen/react-native-menu/issues).
 ## Coming soon
 
 - [x] iOS SafeArea support
-- [ ] Custom width of drawer
+- [x] Custom width of drawer and sliding time
 - [ ] Opacity fade of background screen
 
 ## License
