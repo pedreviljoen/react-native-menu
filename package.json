@@ -4,7 +4,8 @@
   "description": "Simple & lightweight side menu drawer",
   "main": "index.js",
   "scripts": {
-    "test": "echo 'no tests'"
+    "test": "echo 'no tests'",
+    "precommit": "npm version patch"
   },
   "repository": {
     "type": "git",
