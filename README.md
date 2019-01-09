@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     <tr>
         <td><code>animationTime</code></td>
         <td>Integer value, depicting the time (in ms) the menu will slide open & close</td> 
-        <td><code>200</code></td>
+        <td><code>200 (ms)</code></td>
     </tr>
 </table>
 
