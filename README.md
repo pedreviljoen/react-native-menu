@@ -23,7 +23,7 @@
 ## Install
 
 ```sh
-yarn install react-native-side-drawer
+yarn add react-native-side-drawer
 ```
 
 OR
