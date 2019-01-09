@@ -1,8 +1,15 @@
 import React from 'react'
-import { Animated, Dimensions, StyleSheet, View, SafeAreaView, Platform } from 'react-native'
+import { Animated, 
+    Dimensions, 
+    StyleSheet, 
+    View, 
+    SafeAreaView, 
+    Platform,
+    TouchableOpacity } from 'react-native'
 import PropTypes from 'prop-types'
 
-const SCREEN_WIDTH = (Dimensions.get('window').width * 0.55)
+const SCREEN_WIDTH = Dimensions.get('window').width
+const DRAWER_WIDTH = SCREEN_WIDTH * 0.55
 const SCREEN_HEIGHT = Dimensions.get('window').height
 const DURATION     = 200
 const isIOS = Platform.OS === 'ios'
@@ -19,7 +26,7 @@ class MenuDrawer extends React.Component{
 
     openDrawer = () => {
         Animated.timing(this.leftOffset, {
-            toValue: SCREEN_WIDTH,
+            toValue: DRAWER_WIDTH,
             duration: DURATION,
             useNativeDriver: true
         }).start()
@@ -27,10 +34,22 @@ class MenuDrawer extends React.Component{
 
     closeDrawer = () => {
         Animated.timing(this.leftOffset, {
-            toValue: -SCREEN_WIDTH,
+            toValue: 0,
             duration: DURATION,
             useNativeDriver: true
         }).start()
+    }
+
+    drawerFallback = () => {
+        return(
+            <TouchableOpacity
+                onPress={this.closeDrawer}
+            >
+                <Text>
+                    Close
+                </Text>
+            </TouchableOpacity>
+        )
     }
 
     componentDidUpdate () {
@@ -40,16 +59,17 @@ class MenuDrawer extends React.Component{
     }
 
     render() {
-        const { children, containerStyle } = this.props
+        const { children, drawerContent } = this.props
         const animated = { transform: [{ translateX: this.leftOffset }] }
 
         if (isIOS && VERSION >= 11){
             return(
                 <Animated.View style={[animated, styles.main]}>
                     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
-                        <View style={styles.container}>
-                            {children}
+                        <View style={styles.drawer}>
+                            {drawerContent ? drawerContent : this.drawerFallback()}
                         </View>
+                        <View style={styles.container}>{children}</View>
                     </SafeAreaView>
                 </Animated.View>
             )
@@ -57,40 +77,45 @@ class MenuDrawer extends React.Component{
 
         return (
             <Animated.View style={[animated, styles.main]}>
-                <View style={[styles.container, containerStyle]}>
-                    {children}
+                <View style={styles.drawer}>
+                    {drawerContent ? drawerContent : this.drawerFallback()}
                 </View>
+                <View style={styles.container}>{children}</View>
             </Animated.View>
         )
     }
 }
 
+
 MenuDrawer.defaultProps = {
-    containerStyle: {},
     open: false
 }
 
 MenuDrawer.propTypes = {
-    containerStyle: PropTypes.object,
     open: PropTypes.bool
 }
 
 const styles = StyleSheet.create({
     main: {
         position: 'absolute',
-        height: SCREEN_HEIGHT,
-        left: -SCREEN_WIDTH,
-        zIndex: 1
+        left: 0,
+        width: SCREEN_WIDTH + DRAWER_WIDTH,
+        top: 5,
+        zIndex: 0,
     },
     container: {
-        flex: 1,
+        position: "absolute",
+        left: 0,
         width: SCREEN_WIDTH,
-        position: 'absolute',
-        backgroundColor: '#F3F7F9',
-        marginTop: 20,
-        padding: 10,
         height: SCREEN_HEIGHT,
-        zIndex: 1
+        zIndex: 0,
+    },
+    drawer: {
+        position: "absolute",
+        left: -DRAWER_WIDTH,
+        width: DRAWER_WIDTH,
+        height: SCREEN_HEIGHT,
+        zIndex: 1,
     }
 })
 
