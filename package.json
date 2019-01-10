@@ -12,10 +12,11 @@
     "url": "git+https://github.com/pedreviljoen/react-native-menu.git"
   },
   "keywords": [
-    "react",
-    "native",
+    "react-native",
+    "side menu",
     "menu",
-    "drawer"
+    "drawer",
+    "drawer component"
   ],
   "author": "Pedre Viljoen",
   "license": "MIT",
