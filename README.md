@@ -1,5 +1,5 @@
 <div align="center">
-	<img src="assets/menu.gif" alt="Item" height="450px">
+	<img src="assets/menu2.gif" alt="Item" height="450px">
 </div>
 
 # react-native-side-drawer
