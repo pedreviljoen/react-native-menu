@@ -108,36 +108,43 @@ const styles = StyleSheet.create({
     <tr>
         <th>Property</th>
         <th>Description</th> 
+        <th>Type</th>
         <th>Default Value</th>
     </tr>
     <tr>
         <td><code>open</code></td>
-        <td>Boolean value toggling open and close of drawer</td> 
+        <td>Value toggling open and close of drawer</td> 
+        <td><code>Boolean</code></td>
         <td><code>false (closed)</code></td>
     </tr>
     <tr>
         <td><code>drawerContent</code></td>
-        <td>Drawer contents, JSX elements</td> 
-        <td><code>Text component showing Close</code></td>
+        <td>Drawer contents</td> 
+        <td><code>React.Component</code></td>
+        <td><code>Text component: Close</code></td>
     </tr>
     <tr>
         <td><code>drawerPercentage</code></td>
-        <td>Integer value between 0 - 100, depicting the percentage of the screen the drawer will open</td> 
+        <td>Value between 0 - 100, depicting the percentage of the screen the drawer will open</td>
+        <td><code>Integer</code></td> 
         <td><code>45</code></td>
     </tr>
     <tr>
         <td><code>animationTime</code></td>
-        <td>Integer value, depicting the time (in ms) the menu will slide open & close</td> 
+        <td>Value depicting the time (in ms) the menu will slide open & close</td>
+        <td><code>Integer</code></td> 
         <td><code>200</code></td>
     </tr>
     <tr>
         <td><code>overlay</code></td>
-        <td>Boolean value toggling menu overlay or push. When overlay is true, the menu will overlay the background screen. When overlay is false, the menu will push the background screen to the side</td> 
+        <td>Value toggling menu overlay or push. When overlay is true, the menu will overlay the background screen. When overlay is false, the menu will push the background screen to the side</td> 
+        <td><code>Boolean</code></td>
         <td><code>true</code></td>
     </tr>
     <tr>
         <td><code>opacity</code></td>
-        <td>Integer value, between 0-1 for the opacity fade of background when the menu is open</td> 
+        <td>Value between 0-1 for the opacity fade of background when the menu is open</td> 
+        <td><code>Float</code></td>
         <td><code>0.4</code></td>
     </tr>
 </table>
