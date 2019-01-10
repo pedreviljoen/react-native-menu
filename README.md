@@ -67,6 +67,8 @@ class Example extends React.Component {
           drawerContent={this.drawerContent()}
           drawerPercentage={45}
           animationTime={250}
+          overlay={true}
+          opacity={0.4}
         >
           <TouchableOpacity onPress={this.toggleOpen} style={styles.body}>
             <Text>Open</Text>
@@ -95,6 +97,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#F04812'
   }
 })
 ```
@@ -108,14 +111,14 @@ const styles = StyleSheet.create({
         <th>Default Value</th>
     </tr>
     <tr>
-        <td><code>containerStyle</code></td>
-        <td>Styles of item container</td> 
-        <td><code>{}</code></td>
-    </tr>
-    <tr>
         <td><code>open</code></td>
         <td>Boolean value toggling open and close of drawer</td> 
         <td><code>false (closed)</code></td>
+    </tr>
+    <tr>
+        <td><code>drawerContent</code></td>
+        <td>Drawer contents, JSX elements</td> 
+        <td><code>Text component showing Close</code></td>
     </tr>
     <tr>
         <td><code>drawerPercentage</code></td>
@@ -126,6 +129,16 @@ const styles = StyleSheet.create({
         <td><code>animationTime</code></td>
         <td>Integer value, depicting the time (in ms) the menu will slide open & close</td> 
         <td><code>200</code></td>
+    </tr>
+    <tr>
+        <td><code>overlay</code></td>
+        <td>Boolean value toggling menu overlay or push. When overlay is true, the menu will overlay the background screen. When overlay is false, the menu will push the background screen to the side</td> 
+        <td><code>true</code></td>
+    </tr>
+    <tr>
+        <td><code>opacity</code></td>
+        <td>Integer value, between 0-1 for the opacity fade of background when the menu is open</td> 
+        <td><code>0.4</code></td>
     </tr>
 </table>
 
@@ -145,7 +158,7 @@ Or open up [a issue](https://github.com/pedreviljoen/react-native-menu/issues).
 
 - [x] iOS SafeArea support
 - [x] Custom width of drawer and sliding time
-- [ ] Opacity fade of background screen
+- [x] Opacity fade of background screen
 
 ## License
 
