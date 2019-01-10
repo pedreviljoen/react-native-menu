@@ -8,6 +8,8 @@
 [![Make a pull request](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 [![License](https://img.shields.io/npm/l/react-native-side-drawer.svg?style=flat-square)](https://github.com/pedreviljoen/react-native-menu/blob/master/LICENSE)
 [![npm downloads](https://img.shields.io/npm/dm/react-native-side-drawer.svg?style=flat-square)](https://npmjs.org/package/react-native-side-drawer)
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+
 
 > Simple & lightweight side menu drawer
 
