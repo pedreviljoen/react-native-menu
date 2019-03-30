@@ -5,8 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "echo 'no tests'",
-    "pre-commit": "npm version patch",
     "format": "prettier --print-width 100 --no-semi --tab-width 2 --write index.js"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn format"
+    }
   },
   "repository": {
     "type": "git",
@@ -33,6 +37,7 @@
     "react-native": "*"
   },
   "devDependencies": {
+    "husky": "^1.3.1",
     "prettier": "1.15.3",
     "prettier-standard": "^8.0.1"
   },
