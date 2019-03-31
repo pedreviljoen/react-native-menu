@@ -14,6 +14,7 @@ const SCREEN_WIDTH = Dimensions.get("window").width
 const SCREEN_HEIGHT = Dimensions.get("window").height
 const isIOS = Platform.OS === "ios"
 const VERSION = parseInt(Platform.Version, 10)
+const DRAWER_WIDTH_DEFAULT = SCREEN_WIDTH * (45 / 100)
 
 class MenuDrawer extends React.Component {
   constructor(props) {
@@ -213,7 +214,7 @@ const styles = StyleSheet.create({
   main: {
     position: "absolute",
     left: 0,
-    width: SCREEN_WIDTH + DRAWER_WIDTH,
+    width: SCREEN_WIDTH + DRAWER_WIDTH_DEFAULT,
     top: 5,
     zIndex: 0
   },
@@ -226,8 +227,8 @@ const styles = StyleSheet.create({
   },
   drawer: {
     position: "absolute",
-    left: -DRAWER_WIDTH,
-    width: DRAWER_WIDTH,
+    left: -DRAWER_WIDTH_DEFAULT,
+    width: DRAWER_WIDTH_DEFAULT,
     height: SCREEN_HEIGHT,
     zIndex: 1
   }
