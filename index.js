@@ -82,7 +82,7 @@ class MenuDrawer extends React.Component {
 
     if (isIOS && VERSION >= 11) {
       return (
-        <Animated.View style={[animated, styles.main]}>
+        <Animated.View style={[animated, styles.main, { width: SCREEN_WIDTH + DRAWER_WIDTH }]}>
           <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
             <View
               style={[
@@ -111,7 +111,7 @@ class MenuDrawer extends React.Component {
     }
 
     return (
-      <Animated.View style={[animated, styles.main]}>
+      <Animated.View style={[animated, styles.main, { width: SCREEN_WIDTH + DRAWER_WIDTH }]}>
         <View
           style={[
             styles.drawer,
@@ -145,7 +145,7 @@ class MenuDrawer extends React.Component {
 
     if (isIOS && VERSION >= 11) {
       return (
-        <SafeAreaView style={styles.main}>
+        <SafeAreaView style={[styles.main, { width: SCREEN_WIDTH + DRAWER_WIDTH }]}>
           <Animated.View
             style={[animated, styles.drawer, { width: DRAWER_WIDTH, left: -DRAWER_WIDTH }]}
           >
@@ -213,7 +213,6 @@ const styles = StyleSheet.create({
   main: {
     position: "absolute",
     left: 0,
-    width: SCREEN_WIDTH + DRAWER_WIDTH,
     top: 5,
     zIndex: 0
   },
@@ -226,8 +225,6 @@ const styles = StyleSheet.create({
   },
   drawer: {
     position: "absolute",
-    left: -DRAWER_WIDTH,
-    width: DRAWER_WIDTH,
     height: SCREEN_HEIGHT,
     zIndex: 1
   }
