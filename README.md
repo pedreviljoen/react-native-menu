@@ -11,6 +11,7 @@
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 [![Greenkeeper badge](https://badges.greenkeeper.io/pedreviljoen/react-native-menu.svg)](https://greenkeeper.io/)
 
+[![Package Quality](https://npm.packagequality.com/badge/react-native-side-drawer.png)](https://packagequality.com/#?package=react-native-side-drawer)
 
 > Simple & lightweight side menu drawer
 
