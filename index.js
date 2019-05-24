@@ -214,7 +214,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     left: 0,
     top: 5,
-    zIndex: 0
   },
   container: {
     position: "absolute",
