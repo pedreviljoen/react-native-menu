@@ -214,14 +214,13 @@ const styles = StyleSheet.create({
     position: "absolute",
     left: 0,
     top: 5,
-    zIndex: 0
   },
   container: {
     position: "absolute",
     left: 0,
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT,
-    zIndex: 0
+    zIndex: 1
   },
   drawer: {
     position: "absolute",
