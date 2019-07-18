@@ -1,6 +1,6 @@
 {
   "name": "react-native-side-drawer",
-  "version": "1.1.7",
+  "version": "1.1.9",
   "description": "Simple & lightweight side menu drawer",
   "main": "index.js",
   "scripts": {
@@ -37,11 +37,11 @@
     "react-native": "*"
   },
   "devDependencies": {
-    "husky": "^2.1.0",
+    "husky": "2.1.0",
     "prettier": "1.18.2",
-    "prettier-standard": "^8.0.1"
+    "prettier-standard": "8.0.1"
   },
   "dependencies": {
-    "prop-types": "^15.6.2"
+    "prop-types": "15.6.2"
   }
 }
