@@ -424,7 +424,7 @@ please-upgrade-node@^3.2.0:
   dependencies:
     semver-compare "^1.0.0"
 
-prettier-standard@10.0.0:
+prettier-standard@9.1.1:
   version "9.1.1"
   resolved "https://registry.yarnpkg.com/prettier-standard/-/prettier-standard-9.1.1.tgz#31926843d6d2b428fbecb3aceea59e872947d016"
   integrity sha512-d23Hbdf7tIJ5qeEPEv+7B9cGGczJBOyq188kiKGPk/lvlrM3J8umWC8rR9LIbWmuMzbl5iDSL7kG1/wZgh3EYg==
