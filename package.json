@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo 'no tests'",
-    "format": "prettier --print-width 100 --no-semi --tab-width 2 --write index.js"
+    "format": "prettier --print-width 100 --no-semi --tab-width 2 --write index.js",
+    "bump:patch": "yarn version --patch -m \"Bumping to -%s\""
   },
   "husky": {
     "hooks": {
@@ -37,7 +38,7 @@
     "react-native": "*"
   },
   "devDependencies": {
-    "husky": "2.1.0",
+    "husky": "3.0.4",
     "prettier": "1.18.2",
     "prettier-standard": "10.0.0"
   },
