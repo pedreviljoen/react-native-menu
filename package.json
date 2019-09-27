@@ -7,7 +7,7 @@
   "scripts": {
     "test": "echo 'no tests'",
     "format": "prettier --print-width 100 --no-semi --tab-width 2 --write index.js",
-    "bump:patch": "yarn version --patch -m \"Bumping to -%s\""
+    "postversion": "git push && git push --tags"
   },
   "husky": {
     "hooks": {
