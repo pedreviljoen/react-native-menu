@@ -37,7 +37,7 @@ declare module 'react-native-side-drawer' {
 		 * @type bool
 		 * @memberof MenuDrawerProps
 		 */
-		overlay?: bool
+		overlay?: boolean
 
 		/**
 		 * Value between 0-1 for the opacity fade of background when the menu is open
