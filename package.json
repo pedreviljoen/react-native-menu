@@ -1,13 +1,13 @@
 {
   "name": "react-native-side-drawer",
-  "version": "1.1.12",
+  "version": "1.2.0",
   "description": "Simple & lightweight side menu drawer",
   "main": "index.js",
   "types": "index.d.ts",
   "scripts": {
     "test": "echo 'no tests'",
     "format": "prettier --print-width 100 --no-semi --tab-width 2 --write index.js",
-    "bump:patch": "yarn version --patch -m \"Bumping to -%s\""
+    "postversion": "git push && git push --tags"
   },
   "husky": {
     "hooks": {
