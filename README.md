@@ -11,6 +11,7 @@
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 [![CircleCI](https://circleci.com/gh/pedreviljoen/react-native-menu/tree/master.svg?style=svg)](https://circleci.com/gh/pedreviljoen/react-native-menu/tree/master)
 [![Greenkeeper badge](https://badges.greenkeeper.io/pedreviljoen/react-native-menu.svg)](https://greenkeeper.io/)
+[![Known Vulnerabilities](https://snyk.io//test/github/pedreviljoen/react-native-menu/badge.svg?targetFile=package.json)](https://snyk.io//test/github/pedreviljoen/react-native-menu?targetFile=package.json)
 
 [![Package Quality](https://npm.packagequality.com/badge/react-native-side-drawer.png)](https://packagequality.com/#?package=react-native-side-drawer)
 
