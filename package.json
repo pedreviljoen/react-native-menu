@@ -1,6 +1,6 @@
 {
   "name": "react-native-side-drawer",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Simple & lightweight side menu drawer",
   "main": "index.js",
   "types": "index.d.ts",
