@@ -12,6 +12,7 @@
 [![CircleCI](https://circleci.com/gh/pedreviljoen/react-native-menu/tree/master.svg?style=svg)](https://circleci.com/gh/pedreviljoen/react-native-menu/tree/master)
 [![Greenkeeper badge](https://badges.greenkeeper.io/pedreviljoen/react-native-menu.svg)](https://greenkeeper.io/)
 [![Known Vulnerabilities](https://snyk.io//test/github/pedreviljoen/react-native-menu/badge.svg?targetFile=package.json)](https://snyk.io//test/github/pedreviljoen/react-native-menu?targetFile=package.json)
+[![CodeFactor](https://www.codefactor.io/repository/github/pedreviljoen/react-native-menu/badge)](https://www.codefactor.io/repository/github/pedreviljoen/react-native-menu)
 
 [![Package Quality](https://npm.packagequality.com/badge/react-native-side-drawer.png)](https://packagequality.com/#?package=react-native-side-drawer)
 
