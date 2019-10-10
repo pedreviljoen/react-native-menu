@@ -26,7 +26,6 @@ jobs:
       - persist_to_workspace:
           root: ~/repo
           paths: .
-    
   deploy:
     docker:
       - image: circleci/node:8.12.0
