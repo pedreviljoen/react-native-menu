@@ -19,7 +19,12 @@ const VERSION = parseInt(Platform.Version, 10);
 class MenuDrawer extends React.Component {
   constructor(props) {
     super(props);
-    this.leftOffset = new Animated.Value(0);
+    this.isLeftPosition = props.position === "left";
+    const DRAWER_WIDTH = SCREEN_WIDTH * (props.drawerPercentage / 100);
+
+    this.leftOffset = new Animated.Value(
+      this.isLeftPosition ? 0 : SCREEN_WIDTH + DRAWER_WIDTH
+    );
     this.state = {
       expanded: false,
       fadeAnim: new Animated.Value(1),
@@ -29,10 +34,9 @@ class MenuDrawer extends React.Component {
   openDrawer = () => {
     const { drawerPercentage, animationTime, opacity, position } = this.props;
     const DRAWER_WIDTH = SCREEN_WIDTH * (drawerPercentage / 100);
-    const isLeftPosition = position === "left";
     Animated.parallel([
       Animated.timing(this.leftOffset, {
-        toValue: isLeftPosition ? DRAWER_WIDTH : SCREEN_WIDTH,
+        toValue: this.isLeftPosition ? DRAWER_WIDTH : SCREEN_WIDTH,
         duration: animationTime,
         useNativeDriver: true,
       }),
@@ -47,11 +51,10 @@ class MenuDrawer extends React.Component {
   closeDrawer = () => {
     const { drawerPercentage, animationTime, position } = this.props;
     const DRAWER_WIDTH = SCREEN_WIDTH * (drawerPercentage / 100);
-    const isLeftPosition = position === "left";
 
     Animated.parallel([
       Animated.timing(this.leftOffset, {
-        toValue: isLeftPosition ? 0 : SCREEN_WIDTH + DRAWER_WIDTH,
+        toValue: this.isLeftPosition ? 0 : SCREEN_WIDTH + DRAWER_WIDTH,
         duration: animationTime,
         useNativeDriver: true,
       }),
@@ -217,7 +220,7 @@ MenuDrawer.propTypes = {
   animationTime: PropTypes.number,
   overlay: PropTypes.bool,
   opacity: PropTypes.number,
-  position: PropTypes.string,
+  position: PropTypes.oneOf(["left", "right"]),
 };
 
 const styles = StyleSheet.create({
