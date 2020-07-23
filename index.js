@@ -34,6 +34,7 @@ class MenuDrawer extends React.Component {
   openDrawer = () => {
     const { drawerPercentage, animationTime, opacity, position } = this.props;
     const DRAWER_WIDTH = SCREEN_WIDTH * (drawerPercentage / 100);
+
     Animated.parallel([
       Animated.timing(this.leftOffset, {
         toValue: this.isLeftPosition ? DRAWER_WIDTH : SCREEN_WIDTH,

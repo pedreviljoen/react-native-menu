@@ -154,6 +154,12 @@ const styles = StyleSheet.create({
         <td><code>Float</code></td>
         <td><code>0.4</code></td>
     </tr>
+    <tr>
+        <td><code>position</code></td>
+        <td>Value for the drawer to be left or right</td> 
+        <td><code>String</code></td>
+        <td><code>left</code></td>
+    </tr>
 </table>
 
 ## Coming soon
