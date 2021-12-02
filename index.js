@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   Animated,
-  Dimensions,
+  useWindowDimensions,
   StyleSheet,
   View,
   Text,
@@ -11,37 +11,43 @@ import {
 } from "react-native";
 import PropTypes from "prop-types";
 
-const SCREEN_WIDTH = Dimensions.get("window").width;
-const SCREEN_HEIGHT = Dimensions.get("window").height;
 const isIOS = Platform.OS === "ios";
 const VERSION = parseInt(Platform.Version, 10);
 
-class MenuDrawer extends React.Component {
-  constructor(props) {
-    super(props);
-    this.isLeftPosition = props.position === "left";
-    const DRAWER_WIDTH = SCREEN_WIDTH * (props.drawerPercentage / 100);
+const MenuDrawer = (props) => {
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const leftOffsetRef = useRef(new Animated.Value(0));
+  const isLeftPosition = props.position === "left";
+  const window = useWindowDimensions();
+  const screenHeight = window.height;
+  const screenWidth = window.width;
+  const drawerWidthRef = useRef(screenWidth * (props.drawerPercentage / 100));
 
-    this.leftOffset = new Animated.Value(
-      this.isLeftPosition ? 0 : SCREEN_WIDTH + DRAWER_WIDTH
-    );
-    this.state = {
-      expanded: false,
-      fadeAnim: new Animated.Value(1),
-    };
-  }
 
-  openDrawer = () => {
-    const { drawerPercentage, animationTime, opacity, position } = this.props;
-    const DRAWER_WIDTH = SCREEN_WIDTH * (drawerPercentage / 100);
+  useEffect(() => {
+    drawerWidthRef.current = screenWidth * (props.drawerPercentage / 100);
+
+    leftOffsetRef.current = new Animated.Value(0);
+
+    if(props.open) { closeDrawer() & openDrawer() }
+  }, [screenWidth]);
+
+  useEffect(() => {
+    props.open ? openDrawer() : closeDrawer();
+  }, [props.open]);
+
+  const openDrawer = () => {
+    const { drawerPercentage, animationTime, opacity, position } = props;
+    const drawerWidth = drawerWidthRef.current;
+    const leftOffset = leftOffsetRef.current;
 
     Animated.parallel([
-      Animated.timing(this.leftOffset, {
-        toValue: this.isLeftPosition ? DRAWER_WIDTH : SCREEN_WIDTH,
+      Animated.timing(leftOffset, {
+        toValue: isLeftPosition ? drawerWidth : screenWidth,
         duration: animationTime,
         useNativeDriver: true,
       }),
-      Animated.timing(this.state.fadeAnim, {
+      Animated.timing(fadeAnim, {
         toValue: opacity,
         duration: animationTime,
         useNativeDriver: true,
@@ -49,17 +55,18 @@ class MenuDrawer extends React.Component {
     ]).start();
   };
 
-  closeDrawer = () => {
-    const { drawerPercentage, animationTime, position } = this.props;
-    const DRAWER_WIDTH = SCREEN_WIDTH * (drawerPercentage / 100);
+  const closeDrawer = () => {
+    const { drawerPercentage, animationTime, position } = props;
+    const drawerWidth = drawerWidthRef.current;
+    const leftOffset = leftOffsetRef.current;
 
     Animated.parallel([
-      Animated.timing(this.leftOffset, {
-        toValue: this.isLeftPosition ? 0 : SCREEN_WIDTH + DRAWER_WIDTH,
+      Animated.timing(leftOffset, {
+        toValue: isLeftPosition ? 0 : screenWidth + drawerWidth,
         duration: animationTime,
         useNativeDriver: true,
       }),
-      Animated.timing(this.state.fadeAnim, {
+      Animated.timing(fadeAnim, {
         toValue: 1,
         duration: animationTime,
         useNativeDriver: true,
@@ -67,25 +74,19 @@ class MenuDrawer extends React.Component {
     ]).start();
   };
 
-  drawerFallback = () => {
+  const drawerFallback = () => {
     return (
-      <TouchableOpacity onPress={this.closeDrawer}>
+      <TouchableOpacity onPress={closeDrawer}>
         <Text>Close</Text>
       </TouchableOpacity>
     );
   };
 
-  componentDidUpdate() {
-    const { open } = this.props;
-
-    open ? this.openDrawer() : this.closeDrawer();
-  }
-
-  renderPush = () => {
-    const { children, drawerContent, drawerPercentage } = this.props;
-    const { fadeAnim } = this.state;
-    const animated = { transform: [{ translateX: this.leftOffset }] };
-    const DRAWER_WIDTH = SCREEN_WIDTH * (drawerPercentage / 100);
+  const renderPush = () => {
+    const { children, drawerContent, drawerPercentage } = props;
+    const drawerWidth = drawerWidthRef.current
+    const leftOffset = leftOffsetRef.current
+    const animated = { transform: [{ translateX: leftOffset }] };
 
     if (isIOS && VERSION >= 11) {
       return (
@@ -95,17 +96,20 @@ class MenuDrawer extends React.Component {
               style={[
                 styles.drawer,
                 {
-                  width: DRAWER_WIDTH,
-                  left: -DRAWER_WIDTH,
+                  height: screenHeight,
+                  width: drawerWidth,
+                  left: -drawerWidth,
                 },
               ]}
             >
-              {drawerContent ? drawerContent : this.drawerFallback()}
+              {drawerContent ? drawerContent : drawerFallback()}
             </View>
             <Animated.View
               style={[
                 styles.container,
                 {
+                  height: screenHeight,
+                  width: screenWidth,
                   opacity: fadeAnim,
                 },
               ]}
@@ -119,24 +123,27 @@ class MenuDrawer extends React.Component {
 
     return (
       <Animated.View
-        style={[animated, styles.main, { width: SCREEN_WIDTH + DRAWER_WIDTH }]}
+        style={[animated, styles.main, { width: screenWidth + drawerWidth }]}
       >
         <View
           style={[
             styles.drawer,
             {
-              width: DRAWER_WIDTH,
-              left: -DRAWER_WIDTH,
+              height: screenHeight,
+              width: drawerWidth,
+              left: -drawerWidth,
             },
           ]}
         >
-          {drawerContent ? drawerContent : this.drawerFallback()}
+          {drawerContent ? drawerContent : drawerFallback()}
         </View>
         <Animated.View
           style={[
             styles.container,
             {
               opacity: fadeAnim,
+              width: screenWidth,
+              height: screenHeight,
             },
           ]}
         >
@@ -146,11 +153,11 @@ class MenuDrawer extends React.Component {
     );
   };
 
-  renderOverlay = () => {
-    const { children, drawerContent, drawerPercentage } = this.props;
-    const { fadeAnim } = this.state;
-    const animated = { transform: [{ translateX: this.leftOffset }] };
-    const DRAWER_WIDTH = SCREEN_WIDTH * (drawerPercentage / 100);
+  const renderOverlay = () => {
+    const { children, drawerContent, drawerPercentage } = props;
+    const drawerWidth = drawerWidthRef.current
+    const leftOffset = leftOffsetRef.current
+    const animated = { transform: [{ translateX: leftOffset }] };
 
     if (isIOS && VERSION >= 11) {
       return (
@@ -159,12 +166,14 @@ class MenuDrawer extends React.Component {
             style={[
               animated,
               styles.drawer,
-              { width: DRAWER_WIDTH, left: -DRAWER_WIDTH },
+              { height: screenHeight,
+                width: drawerWidth,
+                left: -drawerWidth },
             ]}
           >
-            {drawerContent ? drawerContent : this.drawerFallback()}
+            {drawerContent ? drawerContent : drawerFallback()}
           </Animated.View>
-          <Animated.View style={[styles.container, { opacity: fadeAnim }]}>
+          <Animated.View style={[styles.container, { height: screenHeight, width: screenWidth, opacity: fadeAnim }]}>
             {children}
           </Animated.View>
         </SafeAreaView>
@@ -178,18 +187,21 @@ class MenuDrawer extends React.Component {
             animated,
             styles.drawer,
             {
-              width: DRAWER_WIDTH,
-              left: -DRAWER_WIDTH,
+              height: screenHeight,
+              width: drawerWidth,
+              left: -drawerWidth,
             },
           ]}
         >
-          {drawerContent ? drawerContent : this.drawerFallback()}
+          {drawerContent ? drawerContent : drawerFallback()}
         </Animated.View>
         <Animated.View
           style={[
             styles.container,
             {
               opacity: fadeAnim,
+              width: screenWidth,
+              height: screenHeight,
             },
           ]}
         >
@@ -199,11 +211,9 @@ class MenuDrawer extends React.Component {
     );
   };
 
-  render() {
-    const { overlay } = this.props;
-
-    return overlay ? this.renderOverlay() : this.renderPush();
-  }
+  return(
+    props.overlay ? renderOverlay() : renderPush()
+  )
 }
 
 MenuDrawer.defaultProps = {
@@ -226,20 +236,16 @@ MenuDrawer.propTypes = {
 
 const styles = StyleSheet.create({
   main: {
-    position: "absolute",
     left: 0,
     top: 0,
   },
   container: {
     position: "absolute",
     left: 0,
-    width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT,
     zIndex: 0,
   },
   drawer: {
     position: "absolute",
-    height: SCREEN_HEIGHT,
     zIndex: 1,
   },
 });
