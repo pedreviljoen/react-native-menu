@@ -24,7 +24,6 @@ const MenuDrawer = props => {
   const initialLeftOffset = isLeftPosition ? 0 : screenWidth + initialDrawerWidth
   const leftOffsetRef = useRef(new Animated.Value(initialLeftOffset))
 
-
   useEffect(() => {
     const newDrawerWidth = screenWidth * (props.drawerPercentage / 100)
     const newLeftOffset = isLeftPosition ? 0 : screenWidth + newDrawerWidth
