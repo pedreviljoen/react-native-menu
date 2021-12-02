@@ -11,9 +11,6 @@ import {
 } from "react-native";
 import PropTypes from "prop-types";
 
-const isIOS = Platform.OS === "ios";
-const VERSION = parseInt(Platform.Version, 10);
-
 const MenuDrawer = (props) => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const leftOffsetRef = useRef(new Animated.Value(0));
@@ -88,43 +85,8 @@ const MenuDrawer = (props) => {
     const leftOffset = leftOffsetRef.current
     const animated = { transform: [{ translateX: leftOffset }] };
 
-    if (isIOS && VERSION >= 11) {
-      return (
-        <Animated.View style={[animated, styles.main]}>
-          <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
-            <View
-              style={[
-                styles.drawer,
-                {
-                  height: screenHeight,
-                  width: drawerWidth,
-                  left: -drawerWidth,
-                },
-              ]}
-            >
-              {drawerContent ? drawerContent : drawerFallback()}
-            </View>
-            <Animated.View
-              style={[
-                styles.container,
-                {
-                  height: screenHeight,
-                  width: screenWidth,
-                  opacity: fadeAnim,
-                },
-              ]}
-            >
-              {children}
-            </Animated.View>
-          </SafeAreaView>
-        </Animated.View>
-      );
-    }
-
     return (
-      <Animated.View
-        style={[animated, styles.main, { width: screenWidth + drawerWidth }]}
-      >
+      <Animated.View style={[animated, styles.main]}>
         <View
           style={[
             styles.drawer,
@@ -142,8 +104,6 @@ const MenuDrawer = (props) => {
             styles.container,
             {
               opacity: fadeAnim,
-              width: screenWidth,
-              height: screenHeight,
             },
           ]}
         >
@@ -151,7 +111,7 @@ const MenuDrawer = (props) => {
         </Animated.View>
       </Animated.View>
     );
-  };
+  }
 
   const renderOverlay = () => {
     const { children, drawerContent, drawerPercentage } = props;
@@ -159,57 +119,24 @@ const MenuDrawer = (props) => {
     const leftOffset = leftOffsetRef.current
     const animated = { transform: [{ translateX: leftOffset }] };
 
-    if (isIOS && VERSION >= 11) {
-      return (
-        <SafeAreaView style={[styles.main]}>
-          <Animated.View
-            style={[
-              animated,
-              styles.drawer,
-              { height: screenHeight,
-                width: drawerWidth,
-                left: -drawerWidth },
-            ]}
-          >
-            {drawerContent ? drawerContent : drawerFallback()}
-          </Animated.View>
-          <Animated.View style={[styles.container, { height: screenHeight, width: screenWidth, opacity: fadeAnim }]}>
-            {children}
-          </Animated.View>
-        </SafeAreaView>
-      );
-    }
-
     return (
-      <View style={styles.main}>
+      <>
         <Animated.View
           style={[
             animated,
             styles.drawer,
-            {
-              height: screenHeight,
+            { height: screenHeight,
               width: drawerWidth,
-              left: -drawerWidth,
-            },
-          ]}
-        >
+              left: -drawerWidth },
+          ]}>
           {drawerContent ? drawerContent : drawerFallback()}
         </Animated.View>
-        <Animated.View
-          style={[
-            styles.container,
-            {
-              opacity: fadeAnim,
-              width: screenWidth,
-              height: screenHeight,
-            },
-          ]}
-        >
+        <Animated.View style={[styles.container, { opacity: fadeAnim }]}>
           {children}
         </Animated.View>
-      </View>
+      </>
     );
-  };
+  }
 
   return(
     props.overlay ? renderOverlay() : renderPush()
@@ -218,7 +145,7 @@ const MenuDrawer = (props) => {
 
 MenuDrawer.defaultProps = {
   open: false,
-  drawerPercentage: 45,
+  drawerPercentag: 45,
   animationTime: 200,
   overlay: true,
   opacity: 0.4,
@@ -236,12 +163,12 @@ MenuDrawer.propTypes = {
 
 const styles = StyleSheet.create({
   main: {
+    flex: 1,
     left: 0,
     top: 0,
   },
   container: {
-    position: "absolute",
-    left: 0,
+    flex: 1,
     zIndex: 0,
   },
   drawer: {
