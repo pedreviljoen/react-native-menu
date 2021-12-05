@@ -1,4 +1,4 @@
-/**
+/*
  * Sample React Native App
  * https://github.com/facebook/react-native
  *
@@ -9,7 +9,6 @@
 import React, { useState } from 'react';
 import type {Node} from 'react';
 import {
-  SafeAreaView,
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -18,34 +17,28 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import MenuDrawer from 'react-native-side-drawer'
 
 const Drawer = (props) => {
-  const overlay = true
+  const overlay = false
+  const position = 'right'
+
   const drawerContent = () => {
-    const overlayStyle = {paddingTop: 45}
-    const baseStyle = {flex: 1, backgroundColor: 'orange', borderStyle: 'solid', borderWidth: 2, borderColor: 'black'}
+    const edges = position == 'right' ? ['bottom', 'top', 'right'] : ['bottom', 'top', 'left']
+    const baseStyle = {flex: 1, backgroundColor: 'blue', borderStyle: 'solid', borderWidth: 2, borderColor: 'black'}
 
     return(
-      <View style={baseStyle}>
-        <View style={{flexDirection: 'column', justifyContent: 'space-between', flex: 1, maxHeight: '30%', margin: 10}}>
-          { overlay &&
-            <>
-              <Text>Overlay=true</Text>
-              <TouchableOpacity onPress={props.toggleDrawer}>
-                <Text style={{color: 'blue'}}>I will disappear if you click here</Text>
-              </TouchableOpacity>
-              <Text>When using overlay you will need to account for SafeAreView and it needs unique styling</Text>
-            </>
-          }
-          { !overlay &&
-            <>
-              <Text>Overlay=false</Text>
-              <Text>Generally the styling of the original page should be respected,
-              The animated view is placed inside the original content</Text>
-            </> }
-        </View>
-      </View>
+      <SafeAreaView edges={edges} style={baseStyle}>
+        <View style={{flexDirection: 'column', backgroundColor: 'orange', flex: 1, padding: 20}}>
+          <Text>Overlay={overlay.toString()}</Text>
+          <Text style={{marginTop: 20}}>Position={position}</Text>
+          <TouchableOpacity style={{marginTop: 20}} onPress={props.toggleDrawer}>
+            <Text style={{color: 'blue'}}>I will disappear if you click here</Text>
+          </TouchableOpacity>
+          <Text style={{marginTop: 20}}>When using overlay you will need to account for SafeAreView and it needs unique styling</Text>
+          </View>
+      </SafeAreaView>
     )
   }
 
@@ -53,7 +46,7 @@ const Drawer = (props) => {
     <MenuDrawer
       open={props.open}
       drawerContent={drawerContent()}
-      position={'right'}
+      position={position}
       drawerPercentage={40}
       animationTime={250}
       overlay={overlay}
@@ -70,15 +63,17 @@ const App: () => Node = () => {
   }
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: 'blue'}}>
+    <SafeAreaProvider>
       <Drawer open={openDrawer} toggleDrawer={toggleDrawer}>
-        <View style={{flex: 1, backgroundColor: 'white', flexDirection: 'column', justifyItems: 'center', alignItems: 'center', padding: 30}}>
-          <TouchableOpacity onPress={toggleDrawer}>
-            <Text style={{color: 'blue'}}>Press me to open the drawer</Text>
-          </TouchableOpacity>
-        </View>
+        <SafeAreaView style={{flex: 1, backgroundColor: 'blue'}}>
+          <View style={{flex: 1, backgroundColor: 'white', flexDirection: 'column', justifyItems: 'center', alignItems: 'center', padding: 30}}>
+            <TouchableOpacity onPress={toggleDrawer}>
+              <Text style={{color: 'blue'}}>Press me to open the drawer</Text>
+            </TouchableOpacity>
+          </View>
+        </SafeAreaView>
       </Drawer>
-    </SafeAreaView>
+    </SafeAreaProvider>
   );
 };
 

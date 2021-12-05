@@ -1,7 +1,7 @@
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
-# pod 'react-native-safe-area-context', :path => '../node_modules/react-native-safe-area-context'
+pod 'react-native-safe-area-context', :path => '../node_modules/react-native-safe-area-context'
 
 platform :ios, '11.0'
 
