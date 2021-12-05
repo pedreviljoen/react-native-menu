@@ -10,7 +10,7 @@ import {
 } from "react-native"
 import PropTypes from "prop-types"
 
-const MenuDrawer = (props) => {
+const MenuDrawer = props => {
   const fadeAnim = useRef(new Animated.Value(0)).current
   const window = useWindowDimensions()
   const screenHeight = window.height
@@ -41,7 +41,7 @@ const MenuDrawer = (props) => {
 
     Animated.parallel([
       Animated.timing(leftOffset, {
-        toValue: (props.position === 'left' ? drawerWidth : -drawerWidth),
+        toValue: props.position === "left" ? drawerWidth : -drawerWidth,
         duration: animationTime,
         useNativeDriver: true
       }),
@@ -87,17 +87,24 @@ const MenuDrawer = (props) => {
     const animated = { transform: [{ translateX: leftOffset }] }
 
     return (
-      <Animated.View style={[animated,
-                             { position: 'absolute',
-                               left: (position === 'left' ? -drawerWidth : 0),
-                               height: screenHeight,
-                               width: drawerWidth + screenWidth,
-                               flex: 1, flexDirection: (position === 'left' ? 'row' : 'row-reverse')}]}>
+      <Animated.View
+        style={[
+          animated,
+          {
+            position: "absolute",
+            left: position === "left" ? -drawerWidth : 0,
+            height: screenHeight,
+            width: drawerWidth + screenWidth,
+            flex: 1,
+            flexDirection: position === "left" ? "row" : "row-reverse"
+          }
+        ]}
+      >
         <View
           style={[
             {
               height: screenHeight,
-              width: drawerWidth,
+              width: drawerWidth
             }
           ]}
         >
@@ -112,7 +119,7 @@ const MenuDrawer = (props) => {
             }
           ]}
         >
-          { children }
+          {children}
         </Animated.View>
       </Animated.View>
     )
