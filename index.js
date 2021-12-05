@@ -5,15 +5,13 @@ import {
   StyleSheet,
   View,
   Text,
-  SafeAreaView,
   Platform,
   TouchableOpacity
 } from "react-native"
 import PropTypes from "prop-types"
 
-const MenuDrawer = props => {
+const MenuDrawer = (props) => {
   const fadeAnim = useRef(new Animated.Value(0)).current
-  const isLeftPosition = props.position === "left"
   const window = useWindowDimensions()
   const screenHeight = window.height
   const screenWidth = window.width
@@ -21,15 +19,11 @@ const MenuDrawer = props => {
   const initialDrawerWidth = screenWidth * (props.drawerPercentage / 100)
   const drawerWidthRef = useRef(initialDrawerWidth)
 
-  const initialLeftOffset = isLeftPosition ? 0 : screenWidth + initialDrawerWidth
-  const leftOffsetRef = useRef(new Animated.Value(initialLeftOffset))
+  const leftOffsetRef = useRef(new Animated.Value(0))
 
   useEffect(() => {
     const newDrawerWidth = screenWidth * (props.drawerPercentage / 100)
-    const newLeftOffset = isLeftPosition ? 0 : screenWidth + newDrawerWidth
     drawerWidthRef.current = newDrawerWidth
-
-    leftOffsetRef.current = new Animated.Value(newLeftOffset)
 
     if (props.open) {
       closeDrawer() & openDrawer()
@@ -47,7 +41,7 @@ const MenuDrawer = props => {
 
     Animated.parallel([
       Animated.timing(leftOffset, {
-        toValue: isLeftPosition ? drawerWidth : screenWidth,
+        toValue: (props.position === 'left' ? drawerWidth : -drawerWidth),
         duration: animationTime,
         useNativeDriver: true
       }),
@@ -66,7 +60,7 @@ const MenuDrawer = props => {
 
     Animated.parallel([
       Animated.timing(leftOffset, {
-        toValue: isLeftPosition ? 0 : screenWidth + drawerWidth,
+        toValue: 0,
         duration: animationTime,
         useNativeDriver: true
       }),
@@ -87,20 +81,23 @@ const MenuDrawer = props => {
   }
 
   const renderPush = () => {
-    const { children, drawerContent, drawerPercentage } = props
+    const { children, drawerContent, position, drawerPercentage } = props
     const drawerWidth = drawerWidthRef.current
     const leftOffset = leftOffsetRef.current
     const animated = { transform: [{ translateX: leftOffset }] }
 
     return (
-      <Animated.View style={[animated, styles.main]}>
+      <Animated.View style={[animated,
+                             { position: 'absolute',
+                               left: (position === 'left' ? -drawerWidth : 0),
+                               height: screenHeight,
+                               width: drawerWidth + screenWidth,
+                               flex: 1, flexDirection: (position === 'left' ? 'row' : 'row-reverse')}]}>
         <View
           style={[
-            styles.drawer,
             {
               height: screenHeight,
               width: drawerWidth,
-              left: -drawerWidth
             }
           ]}
         >
@@ -108,20 +105,21 @@ const MenuDrawer = props => {
         </View>
         <Animated.View
           style={[
-            styles.container,
             {
+              height: screenHeight,
+              width: screenWidth,
               opacity: fadeAnim
             }
           ]}
         >
-          {children}
+          { children }
         </Animated.View>
       </Animated.View>
     )
   }
 
   const renderOverlay = () => {
-    const { children, drawerContent, drawerPercentage } = props
+    const { children, position, drawerContent, drawerPercentage } = props
     const drawerWidth = drawerWidthRef.current
     const leftOffset = leftOffsetRef.current
     const animated = { transform: [{ translateX: leftOffset }] }
@@ -131,8 +129,8 @@ const MenuDrawer = props => {
         <Animated.View
           style={[
             animated,
-            styles.drawer,
-            { height: screenHeight, width: drawerWidth, left: -drawerWidth }
+            styles.drawerOverlay,
+            { height: screenHeight, width: drawerWidth, [position]: -drawerWidth }
           ]}
         >
           {drawerContent ? drawerContent : drawerFallback()}
@@ -173,7 +171,7 @@ const styles = StyleSheet.create({
     flex: 1,
     zIndex: 0
   },
-  drawer: {
+  drawerOverlay: {
     position: "absolute",
     zIndex: 1
   }
