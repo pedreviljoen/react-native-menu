@@ -153,7 +153,7 @@ const MenuDrawer = props => {
 
 MenuDrawer.defaultProps = {
   open: false,
-  drawerPercentag: 45,
+  drawerPercentage: 45,
   animationTime: 200,
   overlay: true,
   opacity: 0.4,
