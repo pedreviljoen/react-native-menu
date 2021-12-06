@@ -95,7 +95,7 @@ const MenuDrawer = props => {
             flexDirection: position === "left" ? "row" : "row-reverse",
             left: position === "left" ? -drawerWidth : 0,
             height: screenHeight,
-            width: drawerWidth + screenWidth,
+            width: drawerWidth + screenWidth
           }
         ]}
       >
@@ -141,7 +141,9 @@ const MenuDrawer = props => {
         >
           {drawerContent ? drawerContent : drawerFallback()}
         </Animated.View>
-        <Animated.View style={[styles.containerOverlay, { opacity: fadeAnim }]}>{children}</Animated.View>
+        <Animated.View style={[styles.containerOverlay, { opacity: fadeAnim }]}>
+          {children}
+        </Animated.View>
       </>
     )
   }
@@ -169,8 +171,8 @@ MenuDrawer.propTypes = {
 
 const styles = StyleSheet.create({
   mainPush: {
-    position: 'absolute',
-    flex: 1,
+    position: "absolute",
+    flex: 1
   },
   containerOverlay: {
     flex: 1,
