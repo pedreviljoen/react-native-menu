@@ -1,8 +1,13 @@
+# react-native-side-drawer
+
+The following is taken from [App.js in the example dir](/example/)
+(blue is the safe area, which would need to be configured as seen in the example - taken on iPhone 13)
+
 <div align="center">
 	<img src="./assets/OverlayLeft.gif" alt="Item" height="450px">
 </div>
 
-# react-native-side-drawer
+## Status
 
 [![Package version](https://img.shields.io/npm/v/react-native-side-drawer.svg?style=flat-square)](https://npmjs.org/package/react-native-side-drawer)
 [![Make a pull request](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)

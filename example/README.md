@@ -9,7 +9,7 @@
 # Overlay = false
 <div align="center">
   <img src="../assets/NonOverlayLeft.gif" alt="Item" height="450px">
-  <img src="../assets/NonOverlayLeft.gif" alt="Item" height="450px">
+  <img src="../assets/NonOverlayRight.gif" alt="Item" height="450px">
 </div>
 
 
