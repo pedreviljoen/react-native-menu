@@ -90,13 +90,12 @@ const MenuDrawer = props => {
       <Animated.View
         style={[
           animated,
+          styles.pushMain,
           {
-            position: "absolute",
+            flexDirection: position === "left" ? "row" : "row-reverse",
             left: position === "left" ? -drawerWidth : 0,
             height: screenHeight,
             width: drawerWidth + screenWidth,
-            flex: 1,
-            flexDirection: position === "left" ? "row" : "row-reverse"
           }
         ]}
       >
@@ -142,7 +141,7 @@ const MenuDrawer = props => {
         >
           {drawerContent ? drawerContent : drawerFallback()}
         </Animated.View>
-        <Animated.View style={[styles.container, { opacity: fadeAnim }]}>{children}</Animated.View>
+        <Animated.View style={[styles.containerOverlay, { opacity: fadeAnim }]}>{children}</Animated.View>
       </>
     )
   }
@@ -169,17 +168,18 @@ MenuDrawer.propTypes = {
 }
 
 const styles = StyleSheet.create({
-  main: {
+  mainPush: {
+    position: 'absolute',
     flex: 1,
-    left: 0,
-    top: 0
   },
-  container: {
+  containerOverlay: {
     flex: 1,
+    elevation: 0, // better for android
     zIndex: 0
   },
   drawerOverlay: {
     position: "absolute",
+    elevation: 1, // better for android
     zIndex: 1
   }
 })

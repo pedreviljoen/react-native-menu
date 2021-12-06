@@ -1,5 +1,5 @@
 <div align="center">
-	<img src="assets/menu2.gif" alt="Item" height="450px">
+	<img src="./assets/OverlayLeft.gif" alt="Item" height="450px">
 </div>
 
 # react-native-side-drawer
@@ -16,7 +16,7 @@
 
 [![Package Quality](https://npm.packagequality.com/badge/react-native-side-drawer.png)](https://packagequality.com/#?package=react-native-side-drawer)
 
-> Simple & lightweight side menu drawer
+> Simple & lightweight side menu drawer.
 
 ## Contents
 
@@ -40,6 +40,11 @@ npm install react-native-side-drawer
 ```
 
 ## Usage
+
+*The below is a simple snippet of usage.  It is recommended to use this library in conjunction with safe-area-context-view see [React advise on this as well](https://reactnavigation.org/docs/handling-safe-area/).*
+
+For a (near) full example used with SafeAreaContextView please go to the example:
+[App example with SafeAreaContextView](/example/App.js)
 
 ```javascript
 import React from 'react'
@@ -69,8 +74,9 @@ class Example extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <MenuDrawer 
-          open={this.state.open} 
+        <MenuDrawer
+          open={this.state.open}
+          position={'left'}
           drawerContent={this.drawerContent()}
           drawerPercentage={45}
           animationTime={250}
@@ -164,8 +170,9 @@ const styles = StyleSheet.create({
 
 ## Coming soon
 
-- [x] iOS SafeArea support
+- [x] iOS SafeArea support - Works with SafeAreaContextView with minor adjustments see: [example App.js](/example/App.js)
 - [x] Custom width of drawer and sliding time
+- [x] Right and left drawer
 - [x] Opacity fade of background screen
 
 ## License

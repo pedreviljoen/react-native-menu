@@ -22,7 +22,7 @@ import MenuDrawer from 'react-native-side-drawer'
 
 const Drawer = (props) => {
   const overlay = false
-  const position = 'right'
+  const position = 'left'
 
   const drawerContent = () => {
     const edges = position == 'right' ? ['bottom', 'top', 'right'] : ['bottom', 'top', 'left']
@@ -32,11 +32,11 @@ const Drawer = (props) => {
       <SafeAreaView edges={edges} style={baseStyle}>
         <View style={{flexDirection: 'column', backgroundColor: 'orange', flex: 1, padding: 20}}>
           <Text>Overlay={overlay.toString()}</Text>
-          <Text style={{marginTop: 20}}>Position={position}</Text>
-          <TouchableOpacity style={{marginTop: 20}} onPress={props.toggleDrawer}>
-            <Text style={{color: 'blue'}}>I will disappear if you click here</Text>
+          <Text style={styles.text}>Position={position}</Text>
+          <TouchableOpacity onPress={props.toggleDrawer}>
+            <Text style={styles.textLink}>I will disappear if you click here</Text>
           </TouchableOpacity>
-          <Text style={{marginTop: 20}}>When using overlay you will need to account for SafeAreView and it needs unique styling</Text>
+          <Text style={styles.text}>When using overlay you will need to account for SafeAreView and it needs unique styling</Text>
           </View>
       </SafeAreaView>
     )
@@ -65,10 +65,10 @@ const App: () => Node = () => {
   return (
     <SafeAreaProvider>
       <Drawer open={openDrawer} toggleDrawer={toggleDrawer}>
-        <SafeAreaView style={{flex: 1, backgroundColor: 'blue'}}>
-          <View style={{flex: 1, backgroundColor: 'white', flexDirection: 'column', justifyItems: 'center', alignItems: 'center', padding: 30}}>
+        <SafeAreaView style={styles.safeArea}>
+          <View style={styles.container}>
             <TouchableOpacity onPress={toggleDrawer}>
-              <Text style={{color: 'blue'}}>Press me to open the drawer</Text>
+              <Text style={styles.textLink}>Press me to open the drawer</Text>
             </TouchableOpacity>
           </View>
         </SafeAreaView>
@@ -78,6 +78,20 @@ const App: () => Node = () => {
 };
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1, backgroundColor: 'blue'
+  },
+  container: {
+    flex: 1, flexDirection: 'column', justifyItems: 'center', alignItems: 'center',
+    backgroundColor: 'white', padding: 30
+  },
+  text: {
+    paddingTop: 20
+  },
+  textLink: {
+    paddingTop: 20,
+    color: 'blue'
+  },
   sectionContainer: {
     marginTop: 32,
     paddingHorizontal: 24,
