@@ -41,7 +41,7 @@ npm install react-native-side-drawer
 
 ## Usage
 
-*The below is a simple snippet of usage.  It is recommended to use this library in conjunction with safe-area-context-view see [React advise on this as well](https://reactnavigation.org/docs/handling-safe-area/).*
+**The below is a simple snippet of usage.  It is recommended to use this library in conjunction with safe-area-context-view see [React advise on this as well](https://reactnavigation.org/docs/handling-safe-area/).**
 
 For a (near) full example used with SafeAreaContextView please go to the example:
 [App example with SafeAreaContextView](/example/App.js)
