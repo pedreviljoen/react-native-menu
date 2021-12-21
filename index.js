@@ -24,14 +24,14 @@ const MenuDrawer = props => {
   useEffect(() => {
     const newDrawerWidth = screenWidth * (props.drawerPercentage / 100)
     drawerWidthRef.current = newDrawerWidth
-    if(props.open) {
+    if (props.open) {
       leftOffsetRef.current = new Animated.Value(determineNewLeftOffset(drawerWidthRef.current))
     } else {
       leftOffsetRef.current = new Animated.Value(0)
     }
   }, [screenWidth])
 
-  const determineNewLeftOffset = (drawerWidth) => {
+  const determineNewLeftOffset = drawerWidth => {
     return props.position === "left" ? drawerWidth : -drawerWidth
   }
 
