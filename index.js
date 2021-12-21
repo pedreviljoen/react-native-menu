@@ -24,24 +24,29 @@ const MenuDrawer = props => {
   useEffect(() => {
     const newDrawerWidth = screenWidth * (props.drawerPercentage / 100)
     drawerWidthRef.current = newDrawerWidth
-
-    if (props.open) {
-      closeDrawer() & openDrawer()
+    if(props.open) {
+      leftOffsetRef.current = new Animated.Value(determineNewLeftOffset(drawerWidthRef.current))
+    } else {
+      leftOffsetRef.current = new Animated.Value(0)
     }
   }, [screenWidth])
+
+  const determineNewLeftOffset = (drawerWidth) => {
+    return props.position === "left" ? drawerWidth : -drawerWidth
+  }
 
   useEffect(() => {
     props.open ? openDrawer() : closeDrawer()
   }, [props.open])
 
   const openDrawer = () => {
-    const { drawerPercentage, animationTime, opacity, position } = props
+    const { drawerPercentage, animationTime, opacity } = props
     const drawerWidth = drawerWidthRef.current
     const leftOffset = leftOffsetRef.current
 
     Animated.parallel([
       Animated.timing(leftOffset, {
-        toValue: props.position === "left" ? drawerWidth : -drawerWidth,
+        toValue: determineNewLeftOffset(drawerWidth),
         duration: animationTime,
         useNativeDriver: true
       }),
@@ -54,7 +59,7 @@ const MenuDrawer = props => {
   }
 
   const closeDrawer = () => {
-    const { drawerPercentage, animationTime, position } = props
+    const { drawerPercentage, animationTime } = props
     const drawerWidth = drawerWidthRef.current
     const leftOffset = leftOffsetRef.current
 

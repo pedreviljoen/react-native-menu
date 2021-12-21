@@ -5218,12 +5218,7 @@ react-native-safe-area-context@^3.3.2:
   integrity sha512-yOwiiPJ1rk+/nfK13eafbpW6sKW0jOnsRem2C1LPJjM3tfTof6hlvV5eWHATye3XOpu2cJ7N+HdkUvUDGwFD2Q==
 
 "react-native-side-drawer@file:./..":
-  version "1.2.9"
-  dependencies:
-    prop-types "15.7.2"
-
-"react-native-side-drawer@file:./../":
-  version "1.2.9"
+  version "2.0.0"
   dependencies:
     prop-types "15.7.2"
 
