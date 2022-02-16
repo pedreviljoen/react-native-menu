@@ -44,6 +44,6 @@
     "prettier-standard": "14.1.0"
   },
   "dependencies": {
-    "prop-types": "15.7.2"
+    "prop-types": "15.8.1"
   }
 }
