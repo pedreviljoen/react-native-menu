@@ -1,0 +1,4 @@
+example/*
+assets/*
+.circleci/*
+.github/*

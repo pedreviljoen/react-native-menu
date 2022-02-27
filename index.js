@@ -1,209 +1,159 @@
-import React from "react";
+import React, { useEffect, useState, useRef } from "react"
 import {
   Animated,
-  Dimensions,
+  useWindowDimensions,
   StyleSheet,
   View,
   Text,
-  SafeAreaView,
   Platform,
-  TouchableOpacity,
-} from "react-native";
-import PropTypes from "prop-types";
+  TouchableOpacity
+} from "react-native"
+import PropTypes from "prop-types"
 
-const SCREEN_WIDTH = Dimensions.get("window").width;
-const SCREEN_HEIGHT = Dimensions.get("window").height;
-const isIOS = Platform.OS === "ios";
-const VERSION = parseInt(Platform.Version, 10);
+const MenuDrawer = props => {
+  const fadeAnim = useRef(new Animated.Value(0)).current
+  const window = useWindowDimensions()
+  const screenHeight = window.height
+  const screenWidth = window.width
 
-class MenuDrawer extends React.Component {
-  constructor(props) {
-    super(props);
-    this.isLeftPosition = props.position === "left";
-    const DRAWER_WIDTH = SCREEN_WIDTH * (props.drawerPercentage / 100);
+  const initialDrawerWidth = screenWidth * (props.drawerPercentage / 100)
+  const drawerWidthRef = useRef(initialDrawerWidth)
 
-    this.leftOffset = new Animated.Value(
-      this.isLeftPosition ? 0 : SCREEN_WIDTH + DRAWER_WIDTH
-    );
-    this.state = {
-      expanded: false,
-      fadeAnim: new Animated.Value(1),
-    };
+  const leftOffsetRef = useRef(new Animated.Value(0))
+
+  useEffect(() => {
+    const newDrawerWidth = screenWidth * (props.drawerPercentage / 100)
+    drawerWidthRef.current = newDrawerWidth
+    if (props.open) {
+      leftOffsetRef.current = new Animated.Value(determineNewLeftOffset(drawerWidthRef.current))
+    } else {
+      leftOffsetRef.current = new Animated.Value(0)
+    }
+  }, [screenWidth])
+
+  const determineNewLeftOffset = drawerWidth => {
+    return props.position === "left" ? drawerWidth : -drawerWidth
   }
 
-  openDrawer = () => {
-    const { drawerPercentage, animationTime, opacity, position } = this.props;
-    const DRAWER_WIDTH = SCREEN_WIDTH * (drawerPercentage / 100);
+  useEffect(() => {
+    props.open ? openDrawer() : closeDrawer()
+  }, [props.open])
+
+  const openDrawer = () => {
+    const { drawerPercentage, animationTime, opacity } = props
+    const drawerWidth = drawerWidthRef.current
+    const leftOffset = leftOffsetRef.current
 
     Animated.parallel([
-      Animated.timing(this.leftOffset, {
-        toValue: this.isLeftPosition ? DRAWER_WIDTH : SCREEN_WIDTH,
+      Animated.timing(leftOffset, {
+        toValue: determineNewLeftOffset(drawerWidth),
         duration: animationTime,
-        useNativeDriver: true,
+        useNativeDriver: true
       }),
-      Animated.timing(this.state.fadeAnim, {
+      Animated.timing(fadeAnim, {
         toValue: opacity,
         duration: animationTime,
-        useNativeDriver: true,
-      }),
-    ]).start();
-  };
-
-  closeDrawer = () => {
-    const { drawerPercentage, animationTime, position } = this.props;
-    const DRAWER_WIDTH = SCREEN_WIDTH * (drawerPercentage / 100);
-
-    Animated.parallel([
-      Animated.timing(this.leftOffset, {
-        toValue: this.isLeftPosition ? 0 : SCREEN_WIDTH + DRAWER_WIDTH,
-        duration: animationTime,
-        useNativeDriver: true,
-      }),
-      Animated.timing(this.state.fadeAnim, {
-        toValue: 1,
-        duration: animationTime,
-        useNativeDriver: true,
-      }),
-    ]).start();
-  };
-
-  drawerFallback = () => {
-    return (
-      <TouchableOpacity onPress={this.closeDrawer}>
-        <Text>Close</Text>
-      </TouchableOpacity>
-    );
-  };
-
-  componentDidUpdate() {
-    const { open } = this.props;
-
-    open ? this.openDrawer() : this.closeDrawer();
+        useNativeDriver: true
+      })
+    ]).start()
   }
 
-  renderPush = () => {
-    const { children, drawerContent, drawerPercentage } = this.props;
-    const { fadeAnim } = this.state;
-    const animated = { transform: [{ translateX: this.leftOffset }] };
-    const DRAWER_WIDTH = SCREEN_WIDTH * (drawerPercentage / 100);
+  const closeDrawer = () => {
+    const { drawerPercentage, animationTime } = props
+    const drawerWidth = drawerWidthRef.current
+    const leftOffset = leftOffsetRef.current
 
-    if (isIOS && VERSION >= 11) {
-      return (
-        <Animated.View style={[animated, styles.main]}>
-          <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
-            <View
-              style={[
-                styles.drawer,
-                {
-                  width: DRAWER_WIDTH,
-                  left: -DRAWER_WIDTH,
-                },
-              ]}
-            >
-              {drawerContent ? drawerContent : this.drawerFallback()}
-            </View>
-            <Animated.View
-              style={[
-                styles.container,
-                {
-                  opacity: fadeAnim,
-                },
-              ]}
-            >
-              {children}
-            </Animated.View>
-          </SafeAreaView>
-        </Animated.View>
-      );
-    }
+    Animated.parallel([
+      Animated.timing(leftOffset, {
+        toValue: 0,
+        duration: animationTime,
+        useNativeDriver: true
+      }),
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: animationTime,
+        useNativeDriver: true
+      })
+    ]).start()
+  }
+
+  const drawerFallback = () => {
+    return (
+      <TouchableOpacity onPress={closeDrawer}>
+        <Text>Close</Text>
+      </TouchableOpacity>
+    )
+  }
+
+  const renderPush = () => {
+    const { children, drawerContent, position, drawerPercentage } = props
+    const drawerWidth = drawerWidthRef.current
+    const leftOffset = leftOffsetRef.current
+    const animated = { transform: [{ translateX: leftOffset }] }
 
     return (
       <Animated.View
-        style={[animated, styles.main, { width: SCREEN_WIDTH + DRAWER_WIDTH }]}
+        style={[
+          animated,
+          styles.pushMain,
+          {
+            flexDirection: position === "left" ? "row" : "row-reverse",
+            left: position === "left" ? -drawerWidth : 0,
+            height: screenHeight,
+            width: drawerWidth + screenWidth
+          }
+        ]}
       >
         <View
           style={[
-            styles.drawer,
             {
-              width: DRAWER_WIDTH,
-              left: -DRAWER_WIDTH,
-            },
+              height: screenHeight,
+              width: drawerWidth
+            }
           ]}
         >
-          {drawerContent ? drawerContent : this.drawerFallback()}
+          {drawerContent ? drawerContent : drawerFallback()}
         </View>
         <Animated.View
           style={[
-            styles.container,
             {
-              opacity: fadeAnim,
-            },
+              height: screenHeight,
+              width: screenWidth,
+              opacity: fadeAnim
+            }
           ]}
         >
           {children}
         </Animated.View>
       </Animated.View>
-    );
-  };
+    )
+  }
 
-  renderOverlay = () => {
-    const { children, drawerContent, drawerPercentage } = this.props;
-    const { fadeAnim } = this.state;
-    const animated = { transform: [{ translateX: this.leftOffset }] };
-    const DRAWER_WIDTH = SCREEN_WIDTH * (drawerPercentage / 100);
-
-    if (isIOS && VERSION >= 11) {
-      return (
-        <SafeAreaView style={[styles.main]}>
-          <Animated.View
-            style={[
-              animated,
-              styles.drawer,
-              { width: DRAWER_WIDTH, left: -DRAWER_WIDTH },
-            ]}
-          >
-            {drawerContent ? drawerContent : this.drawerFallback()}
-          </Animated.View>
-          <Animated.View style={[styles.container, { opacity: fadeAnim }]}>
-            {children}
-          </Animated.View>
-        </SafeAreaView>
-      );
-    }
+  const renderOverlay = () => {
+    const { children, position, drawerContent, drawerPercentage } = props
+    const drawerWidth = drawerWidthRef.current
+    const leftOffset = leftOffsetRef.current
+    const animated = { transform: [{ translateX: leftOffset }] }
 
     return (
-      <View style={styles.main}>
+      <>
         <Animated.View
           style={[
             animated,
-            styles.drawer,
-            {
-              width: DRAWER_WIDTH,
-              left: -DRAWER_WIDTH,
-            },
+            styles.drawerOverlay,
+            { height: screenHeight, width: drawerWidth, [position]: -drawerWidth }
           ]}
         >
-          {drawerContent ? drawerContent : this.drawerFallback()}
+          {drawerContent ? drawerContent : drawerFallback()}
         </Animated.View>
-        <Animated.View
-          style={[
-            styles.container,
-            {
-              opacity: fadeAnim,
-            },
-          ]}
-        >
+        <Animated.View style={[styles.containerOverlay, { opacity: fadeAnim }]}>
           {children}
         </Animated.View>
-      </View>
-    );
-  };
-
-  render() {
-    const { overlay } = this.props;
-
-    return overlay ? this.renderOverlay() : this.renderPush();
+      </>
+    )
   }
+
+  return props.overlay ? renderOverlay() : renderPush()
 }
 
 MenuDrawer.defaultProps = {
@@ -212,8 +162,8 @@ MenuDrawer.defaultProps = {
   animationTime: 200,
   overlay: true,
   opacity: 0.4,
-  position: "left",
-};
+  position: "left"
+}
 
 MenuDrawer.propTypes = {
   open: PropTypes.bool,
@@ -221,27 +171,24 @@ MenuDrawer.propTypes = {
   animationTime: PropTypes.number,
   overlay: PropTypes.bool,
   opacity: PropTypes.number,
-  position: PropTypes.oneOf(["left", "right"]),
-};
+  position: PropTypes.oneOf(["left", "right"])
+}
 
 const styles = StyleSheet.create({
-  main: {
+  mainPush: {
     position: "absolute",
-    left: 0,
-    top: 0,
+    flex: 1
   },
-  container: {
+  containerOverlay: {
+    flex: 1,
+    elevation: 0, // better for android
+    zIndex: 0
+  },
+  drawerOverlay: {
     position: "absolute",
-    left: 0,
-    width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT,
-    zIndex: 0,
-  },
-  drawer: {
-    position: "absolute",
-    height: SCREEN_HEIGHT,
-    zIndex: 1,
-  },
-});
+    elevation: 1, // better for android
+    zIndex: 1
+  }
+})
 
-export default MenuDrawer;
+export default MenuDrawer
