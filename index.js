@@ -6,15 +6,16 @@ import {
   View,
   Text,
   Platform,
-  TouchableOpacity
+  TouchableOpacity,
+  Dimensions,
 } from "react-native"
 import PropTypes from "prop-types"
 
 const MenuDrawer = props => {
   const fadeAnim = useRef(new Animated.Value(0)).current
   const window = useWindowDimensions()
-  const screenHeight = window.height
-  const screenWidth = window.width
+  const screenHeight = props.fullSize ? Dimensions.get('screen').height : window.height;
+  const screenWidth = props.fullSize?  Dimensions.get('screen').width: window.width;
 
   const initialDrawerWidth = screenWidth * (props.drawerPercentage / 100)
   const drawerWidthRef = useRef(initialDrawerWidth)
@@ -162,7 +163,8 @@ MenuDrawer.defaultProps = {
   animationTime: 200,
   overlay: true,
   opacity: 0.4,
-  position: "left"
+  position: "left",
+  fullSize: false
 }
 
 MenuDrawer.propTypes = {
@@ -171,7 +173,8 @@ MenuDrawer.propTypes = {
   animationTime: PropTypes.number,
   overlay: PropTypes.bool,
   opacity: PropTypes.number,
-  position: PropTypes.oneOf(["left", "right"])
+  position: PropTypes.oneOf(["left", "right"]),
+  fullSize: PropTypes.bool,
 }
 
 const styles = StyleSheet.create({
